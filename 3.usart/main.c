@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string.h>
 
 UART_HandleTypeDef huart2;
 
@@ -9,6 +10,8 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   uint8_t received_byte;
+  char command_buffer[4] = {0};
+  uint8_t command_length = 0;
   const uint8_t startup_message[] = "hello xiaolin\r\n";
 
   HAL_Init();
@@ -24,6 +27,36 @@ int main(void)
     if (HAL_UART_Receive(&huart2, &received_byte, 1U, HAL_MAX_DELAY) == HAL_OK)
     {
       HAL_UART_Transmit(&huart2, &received_byte, 1U, HAL_MAX_DELAY);
+
+      if (received_byte == '\r' || received_byte == '\n')
+      {
+        command_buffer[command_length] = '\0';
+
+        if (strcmp(command_buffer, "on") == 0)
+        {
+          HAL_GPIO_WritePin(green_GPIO_Port, green_Pin, GPIO_PIN_SET);
+          HAL_UART_Transmit(&huart2, (uint8_t *)"\r\nLED ON\r\n", 10U,
+                            HAL_MAX_DELAY);
+        }
+        else if (strcmp(command_buffer, "off") == 0)
+        {
+          HAL_GPIO_WritePin(green_GPIO_Port, green_Pin, GPIO_PIN_RESET);
+          HAL_UART_Transmit(&huart2, (uint8_t *)"\r\nLED OFF\r\n", 11U,
+                            HAL_MAX_DELAY);
+        }
+
+        command_length = 0;
+        memset(command_buffer, 0, sizeof(command_buffer));
+      }
+      else if (command_length < sizeof(command_buffer) - 1U)
+      {
+        command_buffer[command_length++] = (char)received_byte;
+      }
+      else
+      {
+        command_length = 0;
+        memset(command_buffer, 0, sizeof(command_buffer));
+      }
     }
   }
 }
@@ -59,7 +92,16 @@ static void SystemClock_Config(void)
 
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef gpio_config = {0};
+
   __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  HAL_GPIO_WritePin(green_GPIO_Port, green_Pin, GPIO_PIN_RESET);
+  gpio_config.Pin = green_Pin;
+  gpio_config.Mode = GPIO_MODE_OUTPUT_PP;
+  gpio_config.Pull = GPIO_NOPULL;
+  gpio_config.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(green_GPIO_Port, &gpio_config);
 }
 
 static void MX_USART2_UART_Init(void)
