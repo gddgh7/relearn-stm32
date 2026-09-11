@@ -99,11 +99,15 @@ int main(void)
     /* USER CODE END WHILE */
     if (HAL_GPIO_ReadPin(key1_GPIO_Port, key1_Pin) == GPIO_PIN_RESET)
     {
-      HAL_GPIO_WritePin(green_GPIO_Port, green_Pin, GPIO_PIN_SET);
-    }
-    else
-    {
-      HAL_GPIO_WritePin(green_GPIO_Port, green_Pin, GPIO_PIN_RESET);
+      HAL_Delay(20);
+      if (HAL_GPIO_ReadPin(key1_GPIO_Port, key1_Pin) == GPIO_PIN_RESET)
+      {
+        HAL_GPIO_TogglePin(green_GPIO_Port, green_Pin);
+        while (HAL_GPIO_ReadPin(key1_GPIO_Port, key1_Pin) == GPIO_PIN_RESET)
+        {
+          HAL_Delay(10);
+        }
+      }
     }
 
     /* USER CODE BEGIN 3 */
