@@ -1,8 +1,8 @@
 # 3.usart
 
-USART1 echo example for the KEYSKING F1 board.
+USART2 echo example for the KEYSKING F1 board and onboard CH343P USB-UART.
 
-- TX: PA9
-- RX: PA10
+- TX: PA2
+- RX: PA3
 - Format: 115200 baud, 8 data bits, 1 stop bit, no parity
 - Behavior: sends a startup message and echoes received bytes
