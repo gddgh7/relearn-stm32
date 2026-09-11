@@ -9,7 +9,7 @@ static void MX_USART1_UART_Init(void);
 int main(void)
 {
   uint8_t received_byte;
-  const uint8_t startup_message[] = "USART1 ready. Type to echo: \r\n";
+  const uint8_t startup_message[] = "hello xiaolin\r\n";
 
   HAL_Init();
   SystemClock_Config();
