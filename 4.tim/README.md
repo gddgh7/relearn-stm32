@@ -1,8 +1,7 @@
 # 4.tim
 
-TIM2 base-timer interrupt example.
+TIM3 PWM breathing LED example.
 
-- Timer: TIM2
-- Timer clock: 72 MHz
-- Interrupt period: 500 ms
-- Behavior: toggles the green LED in `HAL_TIM_PeriodElapsedCallback`
+- PWM output: TIM3_CH2 on PA7
+- PWM frequency: about 1 kHz
+- Behavior: gradually changes duty cycle from 0% to 100% and back
