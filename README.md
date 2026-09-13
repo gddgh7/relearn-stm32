@@ -30,10 +30,11 @@
 | `7.servo` | TIM4 PWM | 舵机控制、50 Hz PWM、脉宽与角度对应 |
 | `8.relay` | GPIO | 继电器开关控制、串口命令、低压安全测试 |
 | `9.motor` | GPIO | DRV8833 电机方向控制、串口命令、停止状态 |
+| `10.buzzer` | TIM4 PWM | 无源蜂鸣器、PWM 音调、串口开关控制 |
 
 ## 当前构建例程
 
-CMake 当前默认构建 `9.motor`。每次切换例程时，修改
+CMake 当前默认构建 `10.buzzer`。每次切换例程时，修改
 `cmake/stm32cubemx/CMakeLists.txt` 中的应用程序源文件路径，然后重新构建并烧录。
 
 ## 串口参数
