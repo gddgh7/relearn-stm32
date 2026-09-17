@@ -32,11 +32,12 @@
 | `9.motor` | GPIO | DRV8833 电机方向控制、串口命令、停止状态 |
 | `10.buzzer` | TIM4 PWM | 无源蜂鸣器、PWM 音调、串口开关控制 |
 | `11.rtc` | RTC | 实时时钟、备份域、日期时间输出 |
-| `12.bluetooth` | USART1 | 蓝牙串口命令、无线控制 LED |
+| `12.bluetooth` | USART3 | 蓝牙串口命令、无线控制 LED |
+| `13.aht20` | I2C | AHT20 温湿度采集、I2C 读取、串口输出 |
 
 ## 当前构建例程
 
-CMake 当前默认构建 `12.bluetooth`。每次切换例程时，修改
+CMake 当前默认构建 `13.aht20`。每次切换例程时，修改
 `cmake/stm32cubemx/CMakeLists.txt` 中的应用程序源文件路径，然后重新构建并烧录。
 
 ## 串口参数
